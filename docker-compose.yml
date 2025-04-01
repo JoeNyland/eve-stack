@@ -1,18 +1,18 @@
 services:
   open-webui:
     image: ghcr.io/open-webui/open-webui
-    container_name: holly
+    container_name: eve
     restart: unless-stopped
     networks:
       default:
       ollama:
       proxy:
     environment:
-      CORS_ALLOW_ORIGIN: https://holly
+      CORS_ALLOW_ORIGIN: https://eve
       OLLAMA_BASE_URL: http://ollama:11434
       OAUTH_CLIENT_ID: ${OAUTH_CLIENT_ID:?OAUTH_CLIENT_ID is required}
       OAUTH_CLIENT_SECRET: ${OAUTH_CLIENT_SECRET:?OAUTH_CLIENT_SECRET is required}
-      OPENID_PROVIDER_URL: https://auth.home.joe.nyland.io/application/o/holly/.well-known/openid-configuration
+      OPENID_PROVIDER_URL: https://auth.home.joe.nyland.io/application/o/eve/.well-known/openid-configuration
       OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
       ENABLE_LOGIN_FORM: false
       ENABLE_OAUTH_SIGNUP: true
@@ -20,10 +20,10 @@ services:
       SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
     labels:
       traefik.enable: true
-      traefik.http.routers.holly.rule: Host(`holly`)
-      traefik.http.routers.holly.middlewares: trusted-ipallowlist
+      traefik.http.routers.eve.rule: Host(`eve`)
+      traefik.http.routers.eve.middlewares: trusted-ipallowlist
     volumes:
-      - /containers/holly-open-webui:/app/backend/data
+      - /containers/eve-open-webui:/app/backend/data
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
 
 networks:
