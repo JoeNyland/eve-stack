@@ -1,11 +1,10 @@
 services:
   open-webui:
     image: ghcr.io/open-webui/open-webui
-    container_name: eve
+    container_name: eve-open-webui
     restart: unless-stopped
     networks:
       default:
-      ollama:
       proxy:
     environment:
       CORS_ALLOW_ORIGIN: https://eve
@@ -25,11 +24,17 @@ services:
     volumes:
       - /containers/eve-open-webui:/app/backend/data
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+  ollama:
+    image: ollama/ollama
+    container_name: eve-ollama
+    restart: unless-stopped
+    networks:
+      default:
+    volumes:
+      - /containers/eve-ollama:/root/.ollama
 
 networks:
   default:
     enable_ipv6: true
-  ollama:
-    external: true
   proxy:
     external: true
