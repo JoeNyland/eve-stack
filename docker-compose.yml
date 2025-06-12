@@ -1,10 +1,9 @@
 services:
   open-webui:
     image: ghcr.io/open-webui/open-webui
-    container_name: eve-open-webui
+    container_name: eve
     restart: unless-stopped
     networks:
-      default:
       proxy:
     environment:
       CORS_ALLOW_ORIGIN: https://eve
@@ -22,19 +21,9 @@ services:
       traefik.http.routers.eve.rule: Host(`eve`)
       traefik.http.routers.eve.middlewares: trusted-ipallowlist
     volumes:
-      - /containers/eve-open-webui:/app/backend/data
+      - /containers/eve:/app/backend/data
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
-  ollama:
-    image: ollama/ollama
-    container_name: eve-ollama
-    restart: unless-stopped
-    networks:
-      default:
-    volumes:
-      - /containers/eve-ollama:/root/.ollama
 
 networks:
-  default:
-    enable_ipv6: true
   proxy:
     external: true
